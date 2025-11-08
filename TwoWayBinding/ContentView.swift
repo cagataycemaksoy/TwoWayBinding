@@ -27,8 +27,7 @@ struct ContentView: View {
               .foregroundStyle(.white)
             )
           )
-          .animation(.easeInOut, value: scaleFactor)
-        
+          .shadow(radius: 20)
         
         VStack {
           Text("Charged to %\(chargePercent.formatted())")
@@ -36,28 +35,34 @@ struct ContentView: View {
             .fontWeight(.semibold)
             .foregroundStyle(.appBrown)
           Button("Charge!") {
-            if chargePercent >= 99 {
-              chargePercent = 100
-              isCharged = true
-            } else {
-              chargePercent += 5.88
+            withAnimation(.easeInOut) {
+              buttonPressed()
             }
-            if scaleFactor < 0.85 {
-              scaleFactor += 0.05
-            }
-            
           }
           .font(.headline)
           .fontWeight(.semibold)
           .buttonStyle(.borderedProminent)
           .tint(.appBlue)
           .overlay(Capsule().stroke(.appBrown, lineWidth: 2))
+          .shadow(radius: 4)
         }
         .padding()
       }
       
     }
     .padding()
+  }
+  
+  func buttonPressed() {
+    if chargePercent >= 99 {
+      chargePercent = 100
+      isCharged = true
+    } else {
+      chargePercent += 5.88
+    }
+    if scaleFactor < 0.85 {
+      scaleFactor += 0.05
+    }
   }
 }
 
